@@ -1,0 +1,28 @@
+{
+	"fileTypes": [],
+	"injectionSelector": "L:source.python",
+	"patterns": [
+		{
+			"include": "#comment-cell-splitter"
+		}
+	],
+	"repository": {
+		"comment-cell-splitter": {
+			"name": "comment.line.cell-splitter.python",
+			"begin": "(^|\\G)(\\#)(?=\\s*%%|\\s*\\<(?:codecell|markdowncell)\\>|\\s*In\\[\\d*?\\]|\\s*In\\[ \\])",
+			"beginCaptures": {
+				"2": {
+					"name": "punctuation.definition.comment.python"
+				}
+			},
+			"end": "($)",
+			"patterns": [
+				{
+					"match": ".*+",
+					"name": "markup.bold"
+				}
+			]
+		}
+	},
+    "scopeName": "comment.line.cell-splitter-injection.python"
+}
