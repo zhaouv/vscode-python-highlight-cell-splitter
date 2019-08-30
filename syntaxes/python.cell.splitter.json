@@ -19,7 +19,7 @@
 			"patterns": [
 				{
 					"match": ".*+",
-					"name": "markup.bold"
+					"name": "markup.heading.python.cell.splitter"
 				}
 			]
 		}

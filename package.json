@@ -1,14 +1,14 @@
 {
     "name": "vscode-python-highlight-cell-splitter",
-    "displayName": "vscode-python-highlight-cell-splitter",
-    "description": "highlight cell splitter",
-    "version": "0.0.1",
+    "displayName": "Highlight Python Cell Splitter",
+    "description": "highlight the splitter(title) of python cells",
+    "version": "0.0.2",
     "publisher": "zhaouv",
     "repository": {
-        "url": "https://https://github.com/zhaouv/vscode-python-highlight-cell-splitter.git"
+        "url": "https://github.com/zhaouv/vscode-python-highlight-cell-splitter.git"
     },
     "bugs": {
-        "url": "https://https://github.com/zhaouv/vscode-python-highlight-cell-splitter/issues"
+        "url": "https://github.com/zhaouv/vscode-python-highlight-cell-splitter/issues"
     },
     "engines": {
         "vscode": "^1.20.0"
@@ -18,7 +18,8 @@
     ],
     "keywords": [
         "python",
-        "cell"
+        "cell",
+        "highlight"
     ],
     "contributes": {
         "grammars": [
