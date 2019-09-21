@@ -2,7 +2,7 @@
 
 highlight the splitters of cells, bold them and change their color
 
-You can custom the color by adding the following code into your `setting.json`
+You can customize the color by adding the following code into your `setting.json`
 ```json
     "editor.tokenColorCustomizations": {
         "[Default Dark+]": {
