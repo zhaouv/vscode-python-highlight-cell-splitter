@@ -2,27 +2,53 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
   <dict>
-    <key>fileTypes</key>
-    <array>
-      <string>md</string>
-      <string>mdown</string>
-      <string>markdown</string>
-      <string>markdn</string>
-    </array>
-    <key>keyEquivalent</key>
-    <string>START_MARK_2~M</string>
-    <key>name</key>
-    <string>Markdown</string>
     <key>patterns</key>
     <array>
-
       <dict>
         <key>include</key>
-        <string>#block</string>
+        <string>#comment-markdown-cell-inject-python</string>
       </dict>
     </array>
     <key>repository</key>
     <dict>
+      <key>comment-markdown-cell-inject-python</key>
+      <dict>
+        <key>name</key>
+        <string>text.html.markdown.comment.python</string>
+        <key>begin</key>
+        <string>(?&lt;=(?:^|\G)(?:#\s*%%\s*\[markdown\]|#\s*&lt;markdowncell&gt;)\s*)$</string>
+        <key>end</key>
+        <string>(^|\G)(?=[^#\s]|#\s*%%|\s+\S)</string>
+
+        <!-- <key>while</key>
+        <string>(^# |\G# )(?=\s*%%)|(?:^|\G)\s*</string>
+        <key>whileCaptures</key>
+        <dict>
+          <key>0</key>
+          <dict>
+            <key>name</key>
+            <string>comment.punctuation.definition.markdown.python</string>
+          </dict>
+        </dict> -->
+
+        <key>patterns</key>
+        <array>
+          <dict>
+            <key>include</key>
+            <string>#block</string>
+          </dict>
+          <dict>
+            <key>name</key>
+            <string>comment.punctuation.definition.markdown.python</string>
+            <key>match</key>
+            <string>(^# |\G# )</string>
+          </dict>
+        </array>
+      </dict>
+
+
+
+
       <key>block</key>
       <dict>
         <key>patterns</key>
@@ -68,17 +94,25 @@
       <key>blockquote</key>
       <dict>
         <key>begin</key>
-        <string>(START_MARK_1)[ ]{0,3}(&gt;) ?</string>
+        <string>(^# |\G# )[ ]{0,3}(&gt;) ?</string>
+                    <key>beginCaptures</key>
+                    <dict>
+                      <key>1</key>
+                      <dict>
+                        <key>name</key>
+                        <string>comment.punctuation.definition.markdown.python</string>
+                      </dict>
+                    </dict>
         <key>captures</key>
         <dict>
           <key>2</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.quote.begin.markdown</string>
+            <string>punctuation.definition.quote.begin.markdown.python</string>
           </dict>
         </dict>
         <key>name</key>
-        <string>markup.quote.markdown</string>
+        <string>markup.quote.markdown.python</string>
         <key>patterns</key>
         <array>
           <dict>
@@ -87,59 +121,16 @@
           </dict>
         </array>
         <key>while</key>
-        <string>(START_MARK_1)\s*(&gt;) ?</string>
+        <string>(^# |\G# )\s*(&gt;) ?</string>
+                    <key>whileCaptures</key>
+                    <dict>
+                      <key>1</key>
+                      <dict>
+                        <key>name</key>
+                        <string>comment.punctuation.definition.markdown.python</string>
+                      </dict>
+                    </dict>
       </dict>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
       <key>fenced_code_block</key>
       <dict>
@@ -152,15 +143,25 @@
         </array>
       </dict>
       <key>fenced_code_block_unknown</key>
-      <dict>
+      <dict>        <key>while</key>
+        <string>(^# |\G# )(?!(\2|\s{0,3})(\3)\s*$)</string>
+                    <key>whileCaptures</key>
+                    <dict>
+                      <key>1</key>
+                      <dict>
+                        <key>name</key>
+                        <string>comment.punctuation.definition.markdown.python</string>
+                      </dict>
+                    </dict>
+
         <key>begin</key>
-        <string>(START_MARK_1)(\s*)(`{3,}|~{3,})\s*(?=([^`~]*)?$)</string>
+        <string>(^# |\G# )(\s*)(`{3,}|~{3,})\s*(?=([^`~]*)?$)</string>
         <key>beginCaptures</key>
         <dict>
           <key>3</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.markdown</string>
+            <string>punctuation.definition.markdown.python</string>
           </dict>
           <key>4</key>
           <dict>
@@ -169,25 +170,30 @@
           </dict>
         </dict>
         <key>end</key>
-        <string>(START_MARK_1)(\2|\s{0,3})(\3)\s*$</string>
+        <string>(^# |\G# )(\2|\s{0,3})(\3)\s*$</string>
         <key>endCaptures</key>
         <dict>
           <key>3</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.markdown</string>
+            <string>punctuation.definition.markdown.python</string>
           </dict>
         </dict>
         <key>name</key>
-        <string>markup.fenced_code.block.markdown</string>
+        <string>markup.fenced_code.block.markdown.python</string>
       </dict>
       <key>heading</key>
       <dict>
         <key>match</key>
-        <string>(?:START_MARK_1)[ ]{0,3}(#{1,6}\s+(.*?)(\s+#{1,6})?\s*)$</string>
+        <string>(^# |\G# )[ ]{0,3}(#{1,6}\s+(.*?)(\s+#{1,6})?\s*)$</string>
         <key>captures</key>
         <dict>
           <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>comment.punctuation.definition.markdown.python</string>
+          </dict>
+          <key>2</key>
           <dict>
             <key>patterns</key>
             <array>
@@ -195,23 +201,23 @@
                 <key>match</key>
                 <string>(#{6})\s+(.*?)(?:\s+(#+))?\s*$</string>
                 <key>name</key>
-                <string>heading.6.markdown</string>
+                <string>heading.6.markdown.python</string>
                 <key>captures</key>
                 <dict>
                   <key>1</key>
                   <dict>
                     <key>name</key>
-                    <string>punctuation.definition.heading.markdown</string>
+                    <string>punctuation.definition.heading.markdown.python</string>
                   </dict>
                   <key>2</key>
                   <dict>
                     <key>name</key>
-                    <string>entity.name.section.markdown</string>
+                    <string>entity.name.section.markdown.python</string>
                   </dict>
                   <key>3</key>
                   <dict>
                     <key>name</key>
-                    <string>punctuation.definition.heading.markdown</string>
+                    <string>punctuation.definition.heading.markdown.python</string>
                   </dict>
                 </dict>
               </dict>
@@ -219,23 +225,23 @@
                 <key>match</key>
                 <string>(#{5})\s+(.*?)(?:\s+(#+))?\s*$</string>
                 <key>name</key>
-                <string>heading.5.markdown</string>
+                <string>heading.5.markdown.python</string>
                 <key>captures</key>
                 <dict>
                   <key>1</key>
                   <dict>
                     <key>name</key>
-                    <string>punctuation.definition.heading.markdown</string>
+                    <string>punctuation.definition.heading.markdown.python</string>
                   </dict>
                   <key>2</key>
                   <dict>
                     <key>name</key>
-                    <string>entity.name.section.markdown</string>
+                    <string>entity.name.section.markdown.python</string>
                   </dict>
                   <key>3</key>
                   <dict>
                     <key>name</key>
-                    <string>punctuation.definition.heading.markdown</string>
+                    <string>punctuation.definition.heading.markdown.python</string>
                   </dict>
                 </dict>
               </dict>
@@ -243,23 +249,23 @@
                 <key>match</key>
                 <string>(#{4})\s+(.*?)(?:\s+(#+))?\s*$</string>
                 <key>name</key>
-                <string>heading.4.markdown</string>
+                <string>heading.4.markdown.python</string>
                 <key>captures</key>
                 <dict>
                   <key>1</key>
                   <dict>
                     <key>name</key>
-                    <string>punctuation.definition.heading.markdown</string>
+                    <string>punctuation.definition.heading.markdown.python</string>
                   </dict>
                   <key>2</key>
                   <dict>
                     <key>name</key>
-                    <string>entity.name.section.markdown</string>
+                    <string>entity.name.section.markdown.python</string>
                   </dict>
                   <key>3</key>
                   <dict>
                     <key>name</key>
-                    <string>punctuation.definition.heading.markdown</string>
+                    <string>punctuation.definition.heading.markdown.python</string>
                   </dict>
                 </dict>
               </dict>
@@ -267,23 +273,23 @@
                 <key>match</key>
                 <string>(#{3})\s+(.*?)(?:\s+(#+))?\s*$</string>
                 <key>name</key>
-                <string>heading.3.markdown</string>
+                <string>heading.3.markdown.python</string>
                 <key>captures</key>
                 <dict>
                   <key>1</key>
                   <dict>
                     <key>name</key>
-                    <string>punctuation.definition.heading.markdown</string>
+                    <string>punctuation.definition.heading.markdown.python</string>
                   </dict>
                   <key>2</key>
                   <dict>
                     <key>name</key>
-                    <string>entity.name.section.markdown</string>
+                    <string>entity.name.section.markdown.python</string>
                   </dict>
                   <key>3</key>
                   <dict>
                     <key>name</key>
-                    <string>punctuation.definition.heading.markdown</string>
+                    <string>punctuation.definition.heading.markdown.python</string>
                   </dict>
                 </dict>
               </dict>
@@ -291,23 +297,23 @@
                 <key>match</key>
                 <string>(#{2})\s+(.*?)(?:\s+(#+))?\s*$</string>
                 <key>name</key>
-                <string>heading.2.markdown</string>
+                <string>heading.2.markdown.python</string>
                 <key>captures</key>
                 <dict>
                   <key>1</key>
                   <dict>
                     <key>name</key>
-                    <string>punctuation.definition.heading.markdown</string>
+                    <string>punctuation.definition.heading.markdown.python</string>
                   </dict>
                   <key>2</key>
                   <dict>
                     <key>name</key>
-                    <string>entity.name.section.markdown</string>
+                    <string>entity.name.section.markdown.python</string>
                   </dict>
                   <key>3</key>
                   <dict>
                     <key>name</key>
-                    <string>punctuation.definition.heading.markdown</string>
+                    <string>punctuation.definition.heading.markdown.python</string>
                   </dict>
                 </dict>
               </dict>
@@ -315,23 +321,23 @@
                 <key>match</key>
                 <string>(#{1})\s+(.*?)(?:\s+(#+))?\s*$</string>
                 <key>name</key>
-                <string>heading.1.markdown</string>
+                <string>heading.1.markdown.python</string>
                 <key>captures</key>
                 <dict>
                   <key>1</key>
                   <dict>
                     <key>name</key>
-                    <string>punctuation.definition.heading.markdown</string>
+                    <string>punctuation.definition.heading.markdown.python</string>
                   </dict>
                   <key>2</key>
                   <dict>
                     <key>name</key>
-                    <string>entity.name.section.markdown</string>
+                    <string>entity.name.section.markdown.python</string>
                   </dict>
                   <key>3</key>
                   <dict>
                     <key>name</key>
-                    <string>punctuation.definition.heading.markdown</string>
+                    <string>punctuation.definition.heading.markdown.python</string>
                   </dict>
                 </dict>
               </dict>
@@ -339,7 +345,7 @@
           </dict>
         </dict>
         <key>name</key>
-        <string>markup.heading.markdown</string>
+        <string>markup.heading.markdown.python</string>
         <key>patterns</key>
         <array>
           <dict>
@@ -354,15 +360,15 @@
         <array>
           <dict>
             <key>match</key>
-            <string>START_MARK_2(={3,})(?=[ \t]*END_MARK_1?)</string>
+            <string>^# (={3,})(?=[ \t]*$(?:\\n# )?)</string>
             <key>name</key>
-            <string>markup.heading.setext.1.markdown</string>
+            <string>markup.heading.setext.1.markdown.python</string>
           </dict>
           <dict>
             <key>match</key>
-            <string>START_MARK_2(-{3,})(?=[ \t]*END_MARK_1?)</string>
+            <string>^# (-{3,})(?=[ \t]*$(?:\\n# )?)</string>
             <key>name</key>
-            <string>markup.heading.setext.2.markdown</string>
+            <string>markup.heading.setext.2.markdown.python</string>
           </dict>
         </array>
       </dict>
@@ -372,7 +378,15 @@
         <array>
           <dict>
             <key>begin</key>
-            <string>(START_MARK_1)\s*(&lt;!--)</string>
+            <string>(^# |\G# )\s*(&lt;!--)</string>
+                    <key>beginCaptures</key>
+                    <dict>
+                      <key>1</key>
+                      <dict>
+                        <key>name</key>
+                        <string>comment.punctuation.definition.markdown.python</string>
+                      </dict>
+                    </dict>
             <key>captures</key>
             <dict>
               <key>1</key>
@@ -393,7 +407,15 @@
           </dict>
           <dict>
             <key>begin</key>
-            <string>(?i)(START_MARK_1)\s*(?=&lt;(script|style|pre)(\s|$|&gt;)(?!.*?&lt;/(script|style|pre)&gt;))</string>
+            <string>(?i)(^# |\G# )\s*(?=&lt;(script|style|pre)(\s|$|&gt;)(?!.*?&lt;/(script|style|pre)&gt;))</string>
+                    <key>beginCaptures</key>
+                    <dict>
+                      <key>1</key>
+                      <dict>
+                        <key>name</key>
+                        <string>comment.punctuation.definition.markdown.python</string>
+                      </dict>
+                    </dict>
             <key>end</key>
             <string>(?i)(.*)((&lt;/)(script|style|pre)(&gt;))</string>
             <key>endCaptures</key>
@@ -442,13 +464,21 @@
                   </dict>
                 </array>
                 <key>while</key>
-                <string>(?i)START_MARK_2(?!.*&lt;/(script|style|pre)&gt;)</string>
+                <string>(?i)^# (?!.*&lt;/(script|style|pre)&gt;)</string>
               </dict>
             </array>
           </dict>
           <dict>
             <key>begin</key>
-            <string>(?i)(START_MARK_1)\s*(?=&lt;/?[a-zA-Z]+[^\s/&amp;gt;]*(\s|$|/?&gt;))</string>
+            <string>(?i)(^# |\G# )\s*(?=&lt;/?[a-zA-Z]+[^\s/&amp;gt;]*(\s|$|/?&gt;))</string>
+                    <key>beginCaptures</key>
+                    <dict>
+                      <key>1</key>
+                      <dict>
+                        <key>name</key>
+                        <string>comment.punctuation.definition.markdown.python</string>
+                      </dict>
+                    </dict>
             <key>patterns</key>
             <array>
               <dict>
@@ -457,11 +487,19 @@
               </dict>
             </array>
             <key>while</key>
-            <string>START_MARK_2(?!\s*$)</string>
+            <string>^# (?!\s*$)</string>
           </dict>
           <dict>
             <key>begin</key>
-            <string>(START_MARK_1)\s*(?=(&lt;[a-zA-Z0-9\-](/?&gt;|\s.*?&gt;)|&lt;/[a-zA-Z0-9\-]&gt;)\s*$)</string>
+            <string>(^# |\G# )\s*(?=(&lt;[a-zA-Z0-9\-](/?&gt;|\s.*?&gt;)|&lt;/[a-zA-Z0-9\-]&gt;)\s*$)</string>
+                    <key>beginCaptures</key>
+                    <dict>
+                      <key>1</key>
+                      <dict>
+                        <key>name</key>
+                        <string>comment.punctuation.definition.markdown.python</string>
+                      </dict>
+                    </dict>
             <key>patterns</key>
             <array>
               <dict>
@@ -470,7 +508,7 @@
               </dict>
             </array>
             <key>while</key>
-            <string>START_MARK_2(?!\s*$)</string>
+            <string>^# (?!\s*$)</string>
           </dict>
         </array>
       </dict>
@@ -481,67 +519,67 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.constant.markdown</string>
+            <string>punctuation.definition.constant.markdown.python</string>
           </dict>
           <key>2</key>
           <dict>
             <key>name</key>
-            <string>constant.other.reference.link.markdown</string>
+            <string>constant.other.reference.link.markdown.python</string>
           </dict>
           <key>3</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.constant.markdown</string>
+            <string>punctuation.definition.constant.markdown.python</string>
           </dict>
           <key>4</key>
           <dict>
             <key>name</key>
-            <string>punctuation.separator.key-value.markdown</string>
+            <string>punctuation.separator.key-value.markdown.python</string>
           </dict>
           <key>5</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.link.markdown</string>
+            <string>punctuation.definition.link.markdown.python</string>
           </dict>
           <key>6</key>
           <dict>
             <key>name</key>
-            <string>markup.underline.link.markdown</string>
+            <string>markup.underline.link.markdown.python</string>
           </dict>
           <key>7</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.link.markdown</string>
+            <string>punctuation.definition.link.markdown.python</string>
           </dict>
           <key>8</key>
           <dict>
             <key>name</key>
-            <string>string.other.link.description.title.markdown</string>
+            <string>string.other.link.description.title.markdown.python</string>
           </dict>
           <key>9</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.string.begin.markdown</string>
+            <string>punctuation.definition.string.begin.markdown.python</string>
           </dict>
           <key>10</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.string.end.markdown</string>
+            <string>punctuation.definition.string.end.markdown.python</string>
           </dict>
           <key>11</key>
           <dict>
             <key>name</key>
-            <string>string.other.link.description.title.markdown</string>
+            <string>string.other.link.description.title.markdown.python</string>
           </dict>
           <key>12</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.string.begin.markdown</string>
+            <string>punctuation.definition.string.begin.markdown.python</string>
           </dict>
           <key>13</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.string.end.markdown</string>
+            <string>punctuation.definition.string.end.markdown.python</string>
           </dict>
         </dict>
         <key>match</key>
@@ -559,14 +597,22 @@
   $
 </string>
         <key>name</key>
-        <string>meta.link.reference.def.markdown</string>
+        <string>meta.link.reference.def.markdown.python</string>
       </dict>
       <key>list_paragraph</key>
       <dict>
         <key>begin</key>
-        <string>(START_MARK_1)(?=\S)(?![*+-&gt;]\s|[0-9]+\.\s)</string>
+        <string>(^# |\G# )(?=\S)(?![*+-&gt;]\s|[0-9]+\.\s)</string>
+                    <key>beginCaptures</key>
+                    <dict>
+                      <key>1</key>
+                      <dict>
+                        <key>name</key>
+                        <string>comment.punctuation.definition.markdown.python</string>
+                      </dict>
+                    </dict>
         <key>name</key>
-        <string>meta.paragraph.markdown</string>
+        <string>meta.paragraph.markdown.python</string>
         <key>patterns</key>
         <array>
           <dict>
@@ -583,7 +629,15 @@
           </dict>
         </array>
         <key>while</key>
-        <string>(START_MARK_1)(?!\s*$|#|[ ]{0,3}([-*_&gt;][ ]{2,}){3,}[ \t]*END_MARK_1?|[ ]{0,3}[*+-&gt;]|[ ]{0,3}[0-9]+\.)</string>
+        <string>(^# |\G# )(?!\s*$|#|[ ]{0,3}([-*_&gt;][ ]{2,}){3,}[ \t]*$(?:\\n# )?|[ ]{0,3}[*+-&gt;]|[ ]{0,3}[0-9]+\.)</string>
+                    <key>whileCaptures</key>
+                    <dict>
+                      <key>1</key>
+                      <dict>
+                        <key>name</key>
+                        <string>comment.punctuation.definition.markdown.python</string>
+                      </dict>
+                    </dict>
       </dict>
       <key>lists</key>
       <dict>
@@ -591,19 +645,19 @@
         <array>
           <dict>
             <key>begin</key>
-            <string>(START_MARK_1)([ ]{0,3})([*+-])([ \t])</string>
+            <string>(^# |\G# )([ ]{0,3})([*+-])([ \t])</string>
             <key>beginCaptures</key>
             <dict>
               <key>3</key>
               <dict>
                 <key>name</key>
-                <string>punctuation.definition.list.begin.markdown</string>
+                <string>punctuation.definition.list.begin.markdown.python</string>
               </dict>
             </dict>
             <key>comment</key>
             <string>Currently does not support un-indented second lines.</string>
             <key>name</key>
-            <string>markup.list.unnumbered.markdown</string>
+            <string>markup.list.unnumbered.markdown.python</string>
             <key>patterns</key>
             <array>
               <dict>
@@ -616,21 +670,29 @@
               </dict>
             </array>
             <key>while</key>
-            <string>((START_MARK_1)([ ]{2,4}|\t))|(START_MARK_2[ \t]*$)</string>
+            <string>((^# |\G# )([ ]{2,4}|\t))|(^# [ \t]*$)</string>
+                    <key>whileCaptures</key>
+                    <dict>
+                      <key>1</key>
+                      <dict>
+                        <key>name</key>
+                        <string>comment.punctuation.definition.markdown.python</string>
+                      </dict>
+                    </dict>
           </dict>
           <dict>
             <key>begin</key>
-            <string>(START_MARK_1)([ ]{0,3})([0-9]+\.)([ \t])</string>
+            <string>(^# |\G# )([ ]{0,3})([0-9]+\.)([ \t])</string>
             <key>beginCaptures</key>
             <dict>
               <key>3</key>
               <dict>
                 <key>name</key>
-                <string>punctuation.definition.list.begin.markdown</string>
+                <string>punctuation.definition.list.begin.markdown.python</string>
               </dict>
             </dict>
             <key>name</key>
-            <string>markup.list.numbered.markdown</string>
+            <string>markup.list.numbered.markdown.python</string>
             <key>patterns</key>
             <array>
               <dict>
@@ -643,16 +705,32 @@
               </dict>
             </array>
             <key>while</key>
-            <string>((START_MARK_1)([ ]{2,4}|\t))|(START_MARK_2[ \t]*$)</string>
+            <string>((^# |\G# )([ ]{2,4}|\t))|(^# [ \t]*$)</string>
+                    <key>whileCaptures</key>
+                    <dict>
+                      <key>1</key>
+                      <dict>
+                        <key>name</key>
+                        <string>comment.punctuation.definition.markdown.python</string>
+                      </dict>
+                    </dict>
           </dict>
         </array>
       </dict>
       <key>paragraph</key>
       <dict>
         <key>begin</key>
-        <string>(START_MARK_1)[ ]{0,3}(?=\S)</string>
+        <string>(^# |\G# )[ ]{0,3}(?=\S)</string>
+                    <key>beginCaptures</key>
+                    <dict>
+                      <key>1</key>
+                      <dict>
+                        <key>name</key>
+                        <string>comment.punctuation.definition.markdown.python</string>
+                      </dict>
+                    </dict>
         <key>name</key>
-        <string>meta.paragraph.markdown</string>
+        <string>meta.paragraph.markdown.python</string>
         <key>patterns</key>
         <array>
           <dict>
@@ -669,23 +747,55 @@
           </dict>
         </array>
         <key>while</key>
-        <string>(START_MARK_1)((?=\s*[-=]{3,}\s*$)|[ ]{4,}(?=\S))</string>
+        <string>(^# |\G# )((?=\s*[-=]{3,}\s*$)|[ ]{4,}(?=\S))</string>
+                    <key>whileCaptures</key>
+                    <dict>
+                      <key>1</key>
+                      <dict>
+                        <key>name</key>
+                        <string>comment.punctuation.definition.markdown.python</string>
+                      </dict>
+                    </dict>
       </dict>
       <key>raw_block</key>
       <dict>
         <key>begin</key>
-        <string>(START_MARK_1)([ ]{4}|\t)</string>
+        <string>(^# |\G# )([ ]{4}|\t)</string>
+                    <key>beginCaptures</key>
+                    <dict>
+                      <key>1</key>
+                      <dict>
+                        <key>name</key>
+                        <string>comment.punctuation.definition.markdown.python</string>
+                      </dict>
+                    </dict>
         <key>name</key>
-        <string>markup.raw.block.markdown</string>
+        <string>markup.raw.block.markdown.python</string>
         <key>while</key>
-        <string>(START_MARK_1)([ ]{4}|\t)</string>
+        <string>(^# |\G# )([ ]{4}|\t)</string>
+                    <key>whileCaptures</key>
+                    <dict>
+                      <key>1</key>
+                      <dict>
+                        <key>name</key>
+                        <string>comment.punctuation.definition.markdown.python</string>
+                      </dict>
+                    </dict>
       </dict>
       <key>separator</key>
       <dict>
         <key>match</key>
-        <string>(START_MARK_1)[ ]{0,3}([\*\-\_])([ ]{0,2}\2){2,}[ \t]*END_MARK_1?</string>
+        <string>(^# |\G# )[ ]{0,3}([\*\-\_])([ ]{0,2}\2){2,}[ \t]*$(?:\\n# )?</string>
+        <key>captures</key>
+        <dict>
+          <key>1</key>
+          <dict>
+            <key>name</key>
+            <string>comment.punctuation.definition.markdown.python</string>
+          </dict>
+        </dict>
         <key>name</key>
-        <string>meta.separator.markdown</string>
+        <string>meta.separator.markdown.python</string>
       </dict>
 
 
@@ -758,7 +868,7 @@
         <key>match</key>
         <string>&amp;(?!([a-zA-Z0-9]+|#[0-9]+|#x[0-9a-fA-F]+);)</string>
         <key>name</key>
-        <string>meta.other.valid-ampersand.markdown</string>
+        <string>meta.other.valid-ampersand.markdown.python</string>
       </dict>
       <key>bold</key>
       <dict>
@@ -807,13 +917,13 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.bold.markdown</string>
+            <string>punctuation.definition.bold.markdown.python</string>
           </dict>
         </dict>
         <key>end</key>
         <string>(?&lt;=\S)(\1)</string>
         <key>name</key>
-        <string>markup.bold.markdown</string>
+        <string>markup.bold.markdown.python</string>
         <key>patterns</key>
         <array>
           <dict>
@@ -896,14 +1006,14 @@
         <key>match</key>
         <string>&lt;(?![a-zA-Z/?\$!])</string>
         <key>name</key>
-        <string>meta.other.valid-bracket.markdown</string>
+        <string>meta.other.valid-bracket.markdown.python</string>
       </dict>
       <key>escape</key>
       <dict>
         <key>match</key>
         <string>\\[-`*_#+.!(){}\[\]\\&gt;]</string>
         <key>name</key>
-        <string>constant.character.escape.markdown</string>
+        <string>constant.character.escape.markdown.python</string>
       </dict>
       <key>image-inline</key>
       <dict>
@@ -912,72 +1022,72 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.string.begin.markdown</string>
+            <string>punctuation.definition.string.begin.markdown.python</string>
           </dict>
           <key>2</key>
           <dict>
             <key>name</key>
-            <string>string.other.link.description.markdown</string>
+            <string>string.other.link.description.markdown.python</string>
           </dict>
           <key>4</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.string.end.markdown</string>
+            <string>punctuation.definition.string.end.markdown.python</string>
           </dict>
           <key>5</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.metadata.markdown</string>
+            <string>punctuation.definition.metadata.markdown.python</string>
           </dict>
           <key>6</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.link.markdown</string>
+            <string>punctuation.definition.link.markdown.python</string>
           </dict>
           <key>7</key>
           <dict>
             <key>name</key>
-            <string>markup.underline.link.image.markdown</string>
+            <string>markup.underline.link.image.markdown.python</string>
           </dict>
           <key>8</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.link.markdown</string>
+            <string>punctuation.definition.link.markdown.python</string>
           </dict>
           <key>9</key>
           <dict>
             <key>name</key>
-            <string>string.other.link.description.title.markdown</string>
+            <string>string.other.link.description.title.markdown.python</string>
           </dict>
           <key>10</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.string.markdown</string>
+            <string>punctuation.definition.string.markdown.python</string>
           </dict>
           <key>11</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.string.markdown</string>
+            <string>punctuation.definition.string.markdown.python</string>
           </dict>
           <key>12</key>
           <dict>
             <key>name</key>
-            <string>string.other.link.description.title.markdown</string>
+            <string>string.other.link.description.title.markdown.python</string>
           </dict>
           <key>13</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.string.markdown</string>
+            <string>punctuation.definition.string.markdown.python</string>
           </dict>
           <key>14</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.string.markdown</string>
+            <string>punctuation.definition.string.markdown.python</string>
           </dict>
           <key>15</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.metadata.markdown</string>
+            <string>punctuation.definition.metadata.markdown.python</string>
           </dict>
         </dict>
         <key>match</key>
@@ -995,7 +1105,7 @@
   (\))
 </string>
         <key>name</key>
-        <string>meta.image.inline.markdown</string>
+        <string>meta.image.inline.markdown.python</string>
       </dict>
       <key>image-ref</key>
       <dict>
@@ -1004,38 +1114,38 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.string.begin.markdown</string>
+            <string>punctuation.definition.string.begin.markdown.python</string>
           </dict>
           <key>2</key>
           <dict>
             <key>name</key>
-            <string>string.other.link.description.markdown</string>
+            <string>string.other.link.description.markdown.python</string>
           </dict>
           <key>4</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.string.begin.markdown</string>
+            <string>punctuation.definition.string.begin.markdown.python</string>
           </dict>
           <key>5</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.constant.markdown</string>
+            <string>punctuation.definition.constant.markdown.python</string>
           </dict>
           <key>6</key>
           <dict>
             <key>name</key>
-            <string>constant.other.reference.link.markdown</string>
+            <string>constant.other.reference.link.markdown.python</string>
           </dict>
           <key>7</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.constant.markdown</string>
+            <string>punctuation.definition.constant.markdown.python</string>
           </dict>
         </dict>
         <key>match</key>
         <string>(\!\[)((?&lt;square&gt;[^\[\]\\]|\\.|\[\g&lt;square&gt;*+\])*+)(\])[ ]?(\[)(.*?)(\])</string>
         <key>name</key>
-        <string>meta.image.reference.markdown</string>
+        <string>meta.image.reference.markdown.python</string>
       </dict>
       <key>italic</key>
       <dict>
@@ -1086,13 +1196,13 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.italic.markdown</string>
+            <string>punctuation.definition.italic.markdown.python</string>
           </dict>
         </dict>
         <key>end</key>
         <string>(?&lt;=\S)(\1)((?!\1)|(?=\1\1))</string>
         <key>name</key>
-        <string>markup.italic.markdown</string>
+        <string>markup.italic.markdown.python</string>
         <key>patterns</key>
         <array>
           <dict>
@@ -1171,23 +1281,23 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.link.markdown</string>
+            <string>punctuation.definition.link.markdown.python</string>
           </dict>
           <key>2</key>
           <dict>
             <key>name</key>
-            <string>markup.underline.link.markdown</string>
+            <string>markup.underline.link.markdown.python</string>
           </dict>
           <key>4</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.link.markdown</string>
+            <string>punctuation.definition.link.markdown.python</string>
           </dict>
         </dict>
         <key>match</key>
         <string>(&lt;)((?:mailto:)?[-.\w]+@[-a-z0-9]+(\.[-a-z0-9]+)*\.[a-z]+)(&gt;)</string>
         <key>name</key>
-        <string>meta.link.email.lt-gt.markdown</string>
+        <string>meta.link.email.lt-gt.markdown.python</string>
       </dict>
       <key>link-inet</key>
       <dict>
@@ -1196,23 +1306,23 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.link.markdown</string>
+            <string>punctuation.definition.link.markdown.python</string>
           </dict>
           <key>2</key>
           <dict>
             <key>name</key>
-            <string>markup.underline.link.markdown</string>
+            <string>markup.underline.link.markdown.python</string>
           </dict>
           <key>3</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.link.markdown</string>
+            <string>punctuation.definition.link.markdown.python</string>
           </dict>
         </dict>
         <key>match</key>
         <string>(&lt;)((?:https?|ftp)://.*?)(&gt;)</string>
         <key>name</key>
-        <string>meta.link.inet.markdown</string>
+        <string>meta.link.inet.markdown.python</string>
       </dict>
       <key>link-inline</key>
       <dict>
@@ -1221,72 +1331,72 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.string.begin.markdown</string>
+            <string>punctuation.definition.string.begin.markdown.python</string>
           </dict>
           <key>2</key>
           <dict>
             <key>name</key>
-            <string>string.other.link.title.markdown</string>
+            <string>string.other.link.title.markdown.python</string>
           </dict>
           <key>4</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.string.end.markdown</string>
+            <string>punctuation.definition.string.end.markdown.python</string>
           </dict>
           <key>5</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.metadata.markdown</string>
+            <string>punctuation.definition.metadata.markdown.python</string>
           </dict>
           <key>6</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.link.markdown</string>
+            <string>punctuation.definition.link.markdown.python</string>
           </dict>
           <key>7</key>
           <dict>
             <key>name</key>
-            <string>markup.underline.link.markdown</string>
+            <string>markup.underline.link.markdown.python</string>
           </dict>
           <key>9</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.link.markdown</string>
+            <string>punctuation.definition.link.markdown.python</string>
           </dict>
           <key>10</key>
           <dict>
             <key>name</key>
-            <string>string.other.link.description.title.markdown</string>
+            <string>string.other.link.description.title.markdown.python</string>
           </dict>
           <key>11</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.string.begin.markdown</string>
+            <string>punctuation.definition.string.begin.markdown.python</string>
           </dict>
           <key>12</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.string.end.markdown</string>
+            <string>punctuation.definition.string.end.markdown.python</string>
           </dict>
           <key>13</key>
           <dict>
             <key>name</key>
-            <string>string.other.link.description.title.markdown</string>
+            <string>string.other.link.description.title.markdown.python</string>
           </dict>
           <key>14</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.string.begin.markdown</string>
+            <string>punctuation.definition.string.begin.markdown.python</string>
           </dict>
           <key>15</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.string.end.markdown</string>
+            <string>punctuation.definition.string.end.markdown.python</string>
           </dict>
           <key>16</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.metadata.markdown</string>
+            <string>punctuation.definition.metadata.markdown.python</string>
           </dict>
         </dict>
         <key>match</key>
@@ -1304,7 +1414,7 @@
   (\))
 </string>
         <key>name</key>
-        <string>meta.link.inline.markdown</string>
+        <string>meta.link.inline.markdown.python</string>
       </dict>
       <key>link-ref</key>
       <dict>
@@ -1313,38 +1423,38 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.string.begin.markdown</string>
+            <string>punctuation.definition.string.begin.markdown.python</string>
           </dict>
           <key>2</key>
           <dict>
             <key>name</key>
-            <string>string.other.link.title.markdown</string>
+            <string>string.other.link.title.markdown.python</string>
           </dict>
           <key>4</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.string.end.markdown</string>
+            <string>punctuation.definition.string.end.markdown.python</string>
           </dict>
           <key>5</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.constant.begin.markdown</string>
+            <string>punctuation.definition.constant.begin.markdown.python</string>
           </dict>
           <key>6</key>
           <dict>
             <key>name</key>
-            <string>constant.other.reference.link.markdown</string>
+            <string>constant.other.reference.link.markdown.python</string>
           </dict>
           <key>7</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.constant.end.markdown</string>
+            <string>punctuation.definition.constant.end.markdown.python</string>
           </dict>
         </dict>
         <key>match</key>
         <string>(\[)((?&lt;square&gt;[^\[\]\\]|\\.|\[\g&lt;square&gt;*+\])*+)(\])(\[)([^\]]*+)(\])</string>
         <key>name</key>
-        <string>meta.link.reference.markdown</string>
+        <string>meta.link.reference.markdown.python</string>
       </dict>
       <key>link-ref-literal</key>
       <dict>
@@ -1353,33 +1463,33 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.string.begin.markdown</string>
+            <string>punctuation.definition.string.begin.markdown.python</string>
           </dict>
           <key>2</key>
           <dict>
             <key>name</key>
-            <string>string.other.link.title.markdown</string>
+            <string>string.other.link.title.markdown.python</string>
           </dict>
           <key>4</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.string.end.markdown</string>
+            <string>punctuation.definition.string.end.markdown.python</string>
           </dict>
           <key>5</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.constant.begin.markdown</string>
+            <string>punctuation.definition.constant.begin.markdown.python</string>
           </dict>
           <key>6</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.constant.end.markdown</string>
+            <string>punctuation.definition.constant.end.markdown.python</string>
           </dict>
         </dict>
         <key>match</key>
         <string>(\[)((?&lt;square&gt;[^\[\]\\]|\\.|\[\g&lt;square&gt;*+\])*+)(\])[ ]?(\[)(\])</string>
         <key>name</key>
-        <string>meta.link.reference.literal.markdown</string>
+        <string>meta.link.reference.literal.markdown.python</string>
       </dict>
       <key>link-ref-shortcut</key>
       <dict>
@@ -1388,23 +1498,23 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.string.begin.markdown</string>
+            <string>punctuation.definition.string.begin.markdown.python</string>
           </dict>
           <key>2</key>
           <dict>
             <key>name</key>
-            <string>string.other.link.title.markdown</string>
+            <string>string.other.link.title.markdown.python</string>
           </dict>
           <key>3</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.string.end.markdown</string>
+            <string>punctuation.definition.string.end.markdown.python</string>
           </dict>
         </dict>
         <key>match</key>
         <string>(\[)(\S+?)(\])</string>
         <key>name</key>
-        <string>meta.link.reference.markdown</string>
+        <string>meta.link.reference.markdown.python</string>
       </dict>
       <key>raw</key>
       <dict>
@@ -1413,23 +1523,34 @@
           <key>1</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.raw.markdown</string>
+            <string>punctuation.definition.raw.markdown.python</string>
           </dict>
           <key>3</key>
           <dict>
             <key>name</key>
-            <string>punctuation.definition.raw.markdown</string>
+            <string>punctuation.definition.raw.markdown.python</string>
           </dict>
         </dict>
         <key>match</key>
         <string>(`+)([^`]|(?!(?&lt;!`)\1(?!`))`)*+(\1)</string>
         <key>name</key>
-        <string>markup.inline.raw.string.markdown</string>
+        <string>markup.inline.raw.string.markdown.python</string>
       </dict>
+
+
+
+
+
+
+
+
+
     </dict>
     <key>scopeName</key>
-    <string>text.html.markdown</string>
+    <string>comment.markdown-cell-inject.python</string>
+    <key>injectionSelector</key>
+    <string>source.python</string>
     <key>uuid</key>
-    <string>0A1D9874-B448-11D9-BD50-000D93B6E43C</string>
+    <string>CEA6A09F-7810-487F-9167-FEA86CBB9D4D</string>
   </dict>
 </plist>

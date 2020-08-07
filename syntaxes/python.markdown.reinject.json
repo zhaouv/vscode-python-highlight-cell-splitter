@@ -1,0 +1,16 @@
+{
+	"fileTypes": [],
+	"injectionSelector": "L:comment.markdown.python",
+	"patterns": [
+		{
+			"include": "#comment-asdasd-markdown-cell-reinject-python"
+		}
+	],
+	"repository": {
+		"comment-markdown-cell-reinject-python": {
+			"name": "comment.punctuation.definition.markdown.python",
+			"match": "(?<=^|\\G)# "
+		}
+	},
+    "scopeName": "comment.markdown-cell-reinject.python"
+}
