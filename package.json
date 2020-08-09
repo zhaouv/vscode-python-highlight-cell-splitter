@@ -29,6 +29,16 @@
                 ],
                 "scopeName": "comment.line.cell-splitter-injection.python",
                 "path": "./syntaxes/python.cell.splitter.json"
+            },
+            {
+                "injectTo": [
+                    "source.python"
+                ],
+                "scopeName": "comment.markdown-cell-inject.python",
+                "path": "./syntaxes/python.markdown.inject.json",
+                "embeddedLanguages": {
+                    "meta.embedded.block.md": "markdown"
+                }
             }
         ]
     }
